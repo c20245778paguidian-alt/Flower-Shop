@@ -7,55 +7,116 @@
 
     <title>Bloom & Bliss | Flower Shop</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind Configuration -->
+    <!-- Design System Configuration -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        pinkflower: '#E8A6B5',
-                        lightpink: '#FFF0F3',
-                        darkflower: '#633B4A',
-                        cream: '#FFF9F5'
+                        flower: {
+                            cream: '#FFF9F5',
+                            pink: '#FFF0F3',
+                            rose: '#E8A6B5',
+                            dark: '#633B4A',
+                            night: '#21171D',
+                            surface: '#382630',
+                            lightrose: '#F3C2D0'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+
+    <!-- Remember Theme Preference -->
+    <script>
+        try {
+            const savedTheme = localStorage.getItem('bloom-theme');
+            const prefersDark = window.matchMedia(
+                '(prefers-color-scheme: dark)'
+            ).matches;
+
+            if (savedTheme === 'dark' ||
+                (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            }
+        } catch (error) {
+            console.log('Theme preference unavailable.');
+        }
+    </script>
 </head>
 
-<body class="bg-cream text-darkflower">
+<body class="font-poppins bg-flower-cream text-flower-dark
+             dark:bg-flower-night dark:text-flower-cream
+             transition-colors duration-300">
 
-    <!-- NAVIGATION -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-flower-surface/95
+                   backdrop-blur shadow-md">
 
-            <h1 class="text-2xl font-bold text-darkflower">
-                Bloom <span class="text-pinkflower">& Bliss</span>
-            </h1>
+        <nav class="max-w-7xl mx-auto px-6 py-4
+                    flex justify-between items-center">
 
-            <div class="hidden md:flex gap-8 font-medium">
-                <a href="#home" class="hover:text-pinkflower">Home</a>
-                <a href="#about" class="hover:text-pinkflower">About</a>
-                <a href="#products" class="hover:text-pinkflower">Flowers</a>
-                <a href="#contact" class="hover:text-pinkflower">Contact</a>
-            </div>
-
-            <a href="#products"
-                class="bg-pinkflower text-white px-5 py-2 rounded-full hover:bg-darkflower transition">
-                Shop Now
+            <a href="#home"
+               class="text-2xl font-bold text-flower-dark
+                      dark:text-flower-lightrose">
+                Bloom <span class="text-flower-rose">& Bliss</span>
             </a>
 
+            <div class="hidden md:flex gap-8 font-medium">
+                <a href="#home" class="hover:text-flower-rose">Home</a>
+                <a href="#about" class="hover:text-flower-rose">About</a>
+                <a href="#products" class="hover:text-flower-rose">Flowers</a>
+                <a href="#contact" class="hover:text-flower-rose">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+
+                <!-- DARK MODE BUTTON -->
+                <button
+                    id="themeToggle"
+                    type="button"
+                    aria-label="Switch to dark mode"
+                    aria-pressed="false"
+                    class="w-11 h-11 rounded-full bg-flower-pink
+                           dark:bg-flower-night
+                           text-flower-dark dark:text-flower-lightrose
+                           hover:scale-110 transition">
+
+                    <span class="dark:hidden text-xl">🌙</span>
+                    <span class="hidden dark:inline text-xl">☀️</span>
+
+                </button>
+
+                <a href="#products"
+                   class="hidden sm:inline-block bg-flower-rose
+                          text-white px-5 py-2 rounded-full
+                          hover:bg-flower-dark transition">
+                    Shop Now
+                </a>
+
+            </div>
         </nav>
     </header>
 
     <!-- HERO SECTION -->
     <section id="home"
         class="min-h-[80vh] flex items-center bg-cover bg-center"
-        style="background-image: linear-gradient(#0005,#0005), url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1600');">
+        style="background-image:
+        linear-gradient(#0006,#0006),
+        url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1600');">
 
         <div class="max-w-7xl mx-auto px-6 text-white">
 
@@ -63,9 +124,10 @@
                 Fresh Flowers, Beautiful Memories
             </p>
 
-            <h2 class="text-4xl md:text-6xl font-bold max-w-2xl mb-6">
+            <h1 class="text-4xl md:text-6xl font-bold
+                       max-w-2xl mb-6">
                 Make Every Moment Bloom
-            </h2>
+            </h1>
 
             <p class="text-lg max-w-xl mb-8">
                 Beautiful flowers for birthdays, anniversaries,
@@ -73,7 +135,9 @@
             </p>
 
             <a href="#products"
-                class="inline-block bg-pinkflower px-8 py-3 rounded-full text-white hover:bg-darkflower transition">
+               class="inline-block bg-flower-rose px-8 py-3
+                      rounded-full text-white
+                      hover:bg-flower-dark transition">
                 Explore Flowers
             </a>
 
@@ -83,7 +147,8 @@
     <!-- ABOUT SECTION -->
     <section id="about" class="py-20 px-6">
 
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2
+                    gap-12 items-center">
 
             <img
                 src="https://images.unsplash.com/photo-1520763185298-1b434c919102?w=900"
@@ -92,7 +157,7 @@
 
             <div>
 
-                <p class="text-pinkflower font-bold uppercase mb-3">
+                <p class="text-flower-rose font-bold uppercase mb-3">
                     About Our Shop
                 </p>
 
@@ -100,7 +165,8 @@
                     Flowers That Speak From The Heart
                 </h2>
 
-                <p class="text-gray-600 leading-relaxed mb-6">
+                <p class="text-gray-600 dark:text-gray-300
+                          leading-relaxed mb-6">
                     Bloom & Bliss is a flower shop dedicated to
                     creating beautiful floral arrangements.
                     We offer fresh flowers and customized bouquets
@@ -108,7 +174,9 @@
                 </p>
 
                 <a href="#contact"
-                    class="inline-block bg-darkflower text-white px-6 py-3 rounded-lg hover:bg-pinkflower transition">
+                   class="inline-block bg-flower-dark dark:bg-flower-rose
+                          text-white px-6 py-3 rounded-lg
+                          hover:opacity-80 transition">
                     Contact Us
                 </a>
 
@@ -117,13 +185,14 @@
     </section>
 
     <!-- PRODUCTS SECTION -->
-    <section id="products" class="py-20 bg-lightpink px-6">
+    <section id="products"
+        class="py-20 bg-flower-pink dark:bg-flower-surface px-6">
 
         <div class="max-w-7xl mx-auto">
 
             <div class="text-center mb-12">
 
-                <p class="text-pinkflower font-bold uppercase">
+                <p class="text-flower-rose font-bold uppercase">
                     Our Collection
                 </p>
 
@@ -131,7 +200,7 @@
                     Our Beautiful Flowers
                 </h2>
 
-                <p class="text-gray-600 mt-4">
+                <p class="text-gray-600 dark:text-gray-300 mt-4">
                     Find the perfect flowers for someone special.
                 </p>
 
@@ -140,7 +209,9 @@
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
                 <!-- PRODUCT 1 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:-translate-y-2 transition">
+                <article class="bg-white dark:bg-flower-night
+                                rounded-2xl overflow-hidden shadow-lg
+                                hover:-translate-y-2 transition">
 
                     <img
                         src="https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=800"
@@ -148,22 +219,22 @@
                         class="w-full h-64 object-cover">
 
                     <div class="p-6">
-
                         <h3 class="text-xl font-bold">Red Roses</h3>
 
-                        <p class="text-gray-600 my-3">
+                        <p class="text-gray-600 dark:text-gray-300 my-3">
                             A romantic bouquet perfect for expressing love.
                         </p>
 
-                        <p class="text-pinkflower font-bold text-xl">
+                        <p class="text-flower-rose font-bold text-xl">
                             ₱850
                         </p>
-
                     </div>
-                </div>
+                </article>
 
                 <!-- PRODUCT 2 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:-translate-y-2 transition">
+                <article class="bg-white dark:bg-flower-night
+                                rounded-2xl overflow-hidden shadow-lg
+                                hover:-translate-y-2 transition">
 
                     <img
                         src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=800"
@@ -171,22 +242,22 @@
                         class="w-full h-64 object-cover">
 
                     <div class="p-6">
-
                         <h3 class="text-xl font-bold">Pink Tulips</h3>
 
-                        <p class="text-gray-600 my-3">
+                        <p class="text-gray-600 dark:text-gray-300 my-3">
                             Elegant flowers for birthdays and celebrations.
                         </p>
 
-                        <p class="text-pinkflower font-bold text-xl">
+                        <p class="text-flower-rose font-bold text-xl">
                             ₱750
                         </p>
-
                     </div>
-                </div>
+                </article>
 
                 <!-- PRODUCT 3 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:-translate-y-2 transition">
+                <article class="bg-white dark:bg-flower-night
+                                rounded-2xl overflow-hidden shadow-lg
+                                hover:-translate-y-2 transition">
 
                     <img
                         src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=800"
@@ -194,19 +265,17 @@
                         class="w-full h-64 object-cover">
 
                     <div class="p-6">
-
                         <h3 class="text-xl font-bold">Mixed Bouquet</h3>
 
-                        <p class="text-gray-600 my-3">
+                        <p class="text-gray-600 dark:text-gray-300 my-3">
                             A colorful arrangement for every occasion.
                         </p>
 
-                        <p class="text-pinkflower font-bold text-xl">
+                        <p class="text-flower-rose font-bold text-xl">
                             ₱1,200
                         </p>
-
                     </div>
-                </div>
+                </article>
 
             </div>
         </div>
@@ -217,7 +286,7 @@
 
         <div class="max-w-4xl mx-auto text-center">
 
-            <p class="text-pinkflower font-bold uppercase mb-3">
+            <p class="text-flower-rose font-bold uppercase mb-3">
                 Get In Touch
             </p>
 
@@ -225,7 +294,7 @@
                 Let Your Moments Bloom!
             </h2>
 
-            <p class="text-gray-600 mb-8">
+            <p class="text-gray-600 dark:text-gray-300 mb-8">
                 Visit our flower shop or contact us to order
                 your favorite floral arrangement.
             </p>
@@ -240,17 +309,54 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-darkflower text-white text-center py-6">
+    <footer class="bg-flower-dark dark:bg-flower-surface
+                   text-white text-center py-8">
 
         <h2 class="text-xl font-bold mb-2">
             Bloom & Bliss Flower Shop
         </h2>
 
-        <p class="text-sm">
+        <p class="text-sm text-pink-100">
             © 2026 Bloom & Bliss. All Rights Reserved.
         </p>
 
     </footer>
+
+    <!-- DARK MODE JAVASCRIPT -->
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+
+        themeToggle.addEventListener('click', function () {
+
+            const isDark = document.documentElement.classList.toggle('dark');
+
+            try {
+                localStorage.setItem(
+                    'bloom-theme',
+                    isDark ? 'dark' : 'light'
+                );
+            } catch (error) {
+                console.log('Unable to save theme preference.');
+            }
+
+            themeToggle.setAttribute(
+                'aria-pressed',
+                String(isDark)
+            );
+
+            themeToggle.setAttribute(
+                'aria-label',
+                isDark ? 'Switch to light mode' : 'Switch to dark mode'
+            );
+
+        });
+
+        // Set initial accessibility state
+        themeToggle.setAttribute(
+            'aria-pressed',
+            String(document.documentElement.classList.contains('dark'))
+        );
+    </script>
 
 </body>
 </html>
