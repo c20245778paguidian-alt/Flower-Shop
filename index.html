@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloom & Bliss Flower Shop</title>
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <!-- Tailwind Custom Styles -->
     <style type="text/tailwindcss">
         @custom-variant dark (&:where(.dark, .dark *));
 
@@ -27,6 +29,7 @@
         }
     </style>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,14 +39,36 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         #progressBar {
             transform: scaleX(0);
             transform-origin: left;
         }
 
+        /* Sticky Flower Image */
+        .about-image {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+
+        @media (max-width: 767px) {
+            .about-image {
+                position: relative;
+                top: auto;
+            }
+        }
+
+        /* Reduced Motion */
         @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
             *, *::before, *::after {
-                scroll-behavior: auto !important;
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
             }
@@ -53,19 +78,22 @@
 
 <body class="bg-[#FFF9F5] text-[#633B4A] transition-colors duration-300 dark:bg-[#21171D] dark:text-[#FFF9F5]">
 
-    <!-- Scroll Progress Bar -->
+    <!-- SCROLL PROGRESS BAR -->
     <div id="progressBar"
         class="fixed left-0 top-0 z-[100] h-1 w-full bg-pink-500">
     </div>
 
-    <!-- Navigation -->
+    <!-- NAVIGATION -->
     <header class="sticky top-0 z-50 bg-[#FFF9F5]/90 shadow-sm backdrop-blur-md dark:bg-[#21171D]/90">
+
         <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
 
+            <!-- Logo -->
             <a href="#home" class="text-2xl font-bold text-pink-600">
                 Bloom & Bliss
             </a>
 
+            <!-- Desktop Menu -->
             <div class="hidden items-center gap-8 md:flex">
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#about" class="nav-link">About</a>
@@ -73,37 +101,45 @@
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
 
+            <!-- Dark Mode and Mobile Button -->
             <div class="flex items-center gap-3">
-                <button id="replayBtn" class="btn-primary px-4 py-2 text-sm">
-                    Replay Intro
-                </button>
 
                 <button id="darkModeToggle"
-                    class="rounded-full border border-pink-400 px-4 py-2 text-sm transition hover:bg-pink-100 dark:hover:bg-[#382630]">
+                    class="rounded-full border border-pink-400 px-4 py-2 text-sm transition hover:bg-pink-100 dark:hover:bg-[#382630]"
+                    aria-label="Toggle dark mode">
                     🌙 / ☀️
                 </button>
 
-                <button id="menuBtn" class="text-2xl md:hidden" aria-label="Toggle navigation">
+                <button id="menuBtn"
+                    class="text-2xl md:hidden"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false">
                     ☰
                 </button>
+
             </div>
         </nav>
 
-        <div id="mobileMenu" class="hidden flex-col gap-4 px-6 pb-6 md:hidden">
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+            class="hidden flex-col gap-4 px-6 pb-6 md:hidden">
+
             <a href="#home" class="nav-link">Home</a>
             <a href="#about" class="nav-link">About</a>
             <a href="#products" class="nav-link">Products</a>
             <a href="#contact" class="nav-link">Contact</a>
+
         </div>
     </header>
 
     <main>
 
-        <!-- Hero Section -->
+        <!-- HERO SECTION -->
         <section id="home"
-            class="hero flex min-h-[85vh] items-center justify-center bg-gradient-to-br from-pink-100 via-[#FFF9F5] to-rose-200 px-6 text-center dark:from-[#382630] dark:via-[#21171D] dark:to-[#633B4A]">
+            class="flex min-h-[85vh] items-center justify-center bg-gradient-to-br from-pink-100 via-[#FFF9F5] to-rose-200 px-6 text-center dark:from-[#382630] dark:via-[#21171D] dark:to-[#633B4A]">
 
             <div class="hero-content max-w-3xl">
+
                 <p class="mb-4 font-semibold uppercase tracking-[5px] text-pink-600 dark:text-pink-300">
                     Fresh Flowers • Beautiful Moments
                 </p>
@@ -121,20 +157,27 @@
                 <a href="#products" class="btn-primary inline-block">
                     Explore Our Flowers
                 </a>
+
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="reveal mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 md:grid-cols-2">
+        <!-- ABOUT SECTION -->
+        <section id="about"
+            class="mx-auto grid min-h-[120vh] max-w-7xl items-start gap-12 px-6 py-24 md:grid-cols-2">
 
+            <!-- STICKY FLOWER IMAGE -->
             <div class="about-image">
+
                 <img
                     src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=900"
-                    alt="Beautiful pink flowers"
+                    alt="Beautiful flowers"
                     class="h-[400px] w-full rounded-3xl object-cover shadow-xl">
+
             </div>
 
-            <div class="about-content">
+            <!-- ABOUT CONTENT -->
+            <div class="about-content reveal">
+
                 <p class="mb-3 font-semibold uppercase tracking-widest text-pink-600">
                     About Our Shop
                 </p>
@@ -146,22 +189,40 @@
                 <p class="mb-6 leading-8">
                     Bloom & Bliss Flower Shop brings beauty and happiness
                     through fresh and carefully arranged flowers.
+
                     We believe every flower tells a story and every bouquet
                     creates a special memory.
+                </p>
+
+                <p class="mb-6 leading-8">
+                    Our goal is to make every celebration more meaningful
+                    with beautiful floral arrangements. Whether you are
+                    celebrating a birthday, anniversary, wedding, or simply
+                    showing appreciation, we have flowers for every occasion.
+                </p>
+
+                <p class="mb-6 leading-8">
+                    Every bouquet is carefully prepared with love, creativity,
+                    and attention to detail to bring happiness to the people
+                    who receive it.
                 </p>
 
                 <a href="#contact" class="btn-primary inline-block">
                     Contact Us
                 </a>
+
             </div>
         </section>
 
-        <!-- Products Section -->
-        <section id="products" class="bg-[#FFF0F3] px-6 py-24 dark:bg-[#382630]">
+        <!-- PRODUCTS SECTION -->
+        <section id="products"
+            class="bg-[#FFF0F3] px-6 py-24 dark:bg-[#382630]">
 
             <div class="mx-auto max-w-7xl">
 
+                <!-- Product Heading -->
                 <div class="product-heading mb-14 text-center">
+
                     <p class="mb-3 font-semibold uppercase tracking-widest text-pink-600">
                         Our Collection
                     </p>
@@ -173,43 +234,109 @@
                     <p class="mt-4">
                         Find the perfect bouquet for every occasion.
                     </p>
+
                 </div>
 
+                <!-- Product Grid -->
                 <div class="grid gap-8 md:grid-cols-3">
 
+                    <!-- PRODUCT 1 -->
                     <div class="product-card">
-                        <img src="https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=700"
+
+                        <img
+                            src="https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=700"
                             alt="Red rose bouquet"
                             class="h-72 w-full object-cover">
 
                         <div class="p-6">
-                            <h3 class="mb-2 text-xl font-bold">Red Rose Bouquet</h3>
-                            <p class="mb-4">A classic symbol of love and romance.</p>
-                            <p class="font-bold text-pink-600">₱850</p>
+
+                            <h3 class="mb-2 text-xl font-bold">
+                                Red Rose Bouquet
+                            </h3>
+
+                            <p class="mb-4">
+                                A classic symbol of love and romance.
+                            </p>
+
+                            <p class="font-bold text-pink-600">
+                                ₱850
+                            </p>
+
                         </div>
                     </div>
 
+                    <!-- PRODUCT 2 -->
                     <div class="product-card">
-                        <img src="https://images.unsplash.com/photo-1520763185298-1b434c919102?w=700"
+
+                        <img
+                            src="https://images.unsplash.com/photo-1520763185298-1b434c919102?w=700"
                             alt="Pink flower bouquet"
                             class="h-72 w-full object-cover">
 
                         <div class="p-6">
-                            <h3 class="mb-2 text-xl font-bold">Pink Blossom</h3>
-                            <p class="mb-4">A lovely gift for someone special.</p>
-                            <p class="font-bold text-pink-600">₱1,200</p>
+
+                            <h3 class="mb-2 text-xl font-bold">
+                                Pink Blossom
+                            </h3>
+
+                            <p class="mb-4">
+                                A lovely gift for someone special.
+                            </p>
+
+                            <p class="font-bold text-pink-600">
+                                ₱1,200
+                            </p>
+
                         </div>
                     </div>
 
+                    <!-- PRODUCT 3 -->
                     <div class="product-card">
-                        <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=700"
+
+                        <img
+                            src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=700"
                             alt="White flower bouquet"
                             class="h-72 w-full object-cover">
 
                         <div class="p-6">
-                            <h3 class="mb-2 text-xl font-bold">White Elegance</h3>
-                            <p class="mb-4">Simple, elegant, and timeless.</p>
-                            <p class="font-bold text-pink-600">₱1,500</p>
+
+                            <h3 class="mb-2 text-xl font-bold">
+                                White Elegance
+                            </h3>
+
+                            <p class="mb-4">
+                                Simple, elegant, and timeless.
+                            </p>
+
+                            <p class="font-bold text-pink-600">
+                                ₱1,500
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- PRODUCT 4 -->
+                    <div class="product-card">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1494625927555-6ec4433b1571?w=700"
+                            alt="Colorful mixed flower bouquet"
+                            class="h-72 w-full object-cover">
+
+                        <div class="p-6">
+
+                            <h3 class="mb-2 text-xl font-bold">
+                                Sunshine Bouquet
+                            </h3>
+
+                            <p class="mb-4">
+                                A colorful arrangement that brings joy and happiness.
+                            </p>
+
+                            <p class="font-bold text-pink-600">
+                                ₱1,800
+                            </p>
+
                         </div>
                     </div>
 
@@ -217,10 +344,12 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="reveal mx-auto max-w-3xl px-6 py-24">
+        <!-- CONTACT SECTION -->
+        <section id="contact"
+            class="reveal mx-auto max-w-3xl px-6 py-24">
 
             <div class="mb-10 text-center">
+
                 <p class="mb-3 font-semibold uppercase tracking-widest text-pink-600">
                     Get In Touch
                 </p>
@@ -232,205 +361,310 @@
                 <p class="mt-4">
                     Have a question or want to order flowers? Send us a message.
                 </p>
+
             </div>
 
+            <!-- Contact Form -->
             <form id="contactForm" class="flex flex-col gap-5">
 
-                <label for="name" class="font-medium">Your Name</label>
-                <input type="text" id="name" required
+                <label for="name" class="font-medium">
+                    Your Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
                     class="rounded-xl border border-pink-200 bg-white p-4 text-gray-900 outline-none focus:border-pink-500 dark:border-[#633B4A] dark:bg-[#382630] dark:text-white">
 
-                <label for="email" class="font-medium">Your Email</label>
-                <input type="email" id="email" required
+                <label for="email" class="font-medium">
+                    Your Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
                     class="rounded-xl border border-pink-200 bg-white p-4 text-gray-900 outline-none focus:border-pink-500 dark:border-[#633B4A] dark:bg-[#382630] dark:text-white">
 
-                <label for="message" class="font-medium">Your Message</label>
-                <textarea id="message" rows="5" required
+                <label for="message" class="font-medium">
+                    Your Message
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    required
                     class="rounded-xl border border-pink-200 bg-white p-4 text-gray-900 outline-none focus:border-pink-500 dark:border-[#633B4A] dark:bg-[#382630] dark:text-white"></textarea>
 
                 <button type="submit" class="btn-primary">
                     Send Message
                 </button>
 
-                <p id="formMessage" class="text-center text-sm" aria-live="polite"></p>
+                <p id="formMessage"
+                    class="text-center text-sm"
+                    aria-live="polite">
+                </p>
+
             </form>
         </section>
 
     </main>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="bg-[#633B4A] px-6 py-10 text-center text-white">
-        <h2 class="mb-3 text-2xl font-bold">Bloom & Bliss</h2>
-        <p>Bringing happiness through flowers.</p>
-        <p class="mt-5 text-sm">© <span id="year"></span> Bloom & Bliss Flower Shop. All rights reserved.</p>
+
+        <h2 class="mb-3 text-2xl font-bold">
+            Bloom & Bliss
+        </h2>
+
+        <p>
+            Bringing happiness through flowers.
+        </p>
+
+        <p class="mt-5 text-sm">
+            © <span id="year"></span>
+            Bloom & Bliss Flower Shop. All rights reserved.
+        </p>
+
     </footer>
 
-    <!-- GSAP and ScrollTrigger -->
+    <!-- GSAP -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+    <!-- SCROLLTRIGGER -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 
     <script>
-        // Register ScrollTrigger
+
+        // REGISTER SCROLLTRIGGER
         gsap.registerPlugin(ScrollTrigger);
 
+
+        // REDUCED MOTION SUPPORT
         const prefersReducedMotion = window.matchMedia(
             "(prefers-reduced-motion: reduce)"
         ).matches;
 
-        // Dark Mode
+
+        // DARK MODE
         const darkModeToggle = document.querySelector("#darkModeToggle");
         const html = document.documentElement;
 
         let spinTween;
 
         darkModeToggle.addEventListener("click", function () {
+
             html.classList.toggle("dark");
 
-            if (!prefersReducedMotion) {
-                if (!spinTween) {
-                    spinTween = gsap.to(darkModeToggle, {
-                        rotation: "+=360",
-                        duration: 2,
-                        ease: "power1.in",
-                        repeat: -1,
-                        onRepeat() {
-                            this.duration(Math.max(0.08, this.duration() * 0.8));
-                        }
-                    });
-                }
+            if (!prefersReducedMotion && !spinTween) {
+
+                spinTween = gsap.to(darkModeToggle, {
+                    rotation: "+=360",
+                    duration: 2,
+                    ease: "power1.in",
+                    repeat: -1,
+
+                    onRepeat() {
+                        this.duration(
+                            Math.max(0.08, this.duration() * 0.8)
+                        );
+                    }
+                });
+
             }
+
         });
 
-        // Mobile Menu
+
+        // MOBILE MENU
         const menuBtn = document.querySelector("#menuBtn");
         const mobileMenu = document.querySelector("#mobileMenu");
 
         menuBtn.addEventListener("click", function () {
+
             mobileMenu.classList.toggle("hidden");
-            menuBtn.textContent = mobileMenu.classList.contains("hidden") ? "☰" : "✕";
+
+            const isOpen = !mobileMenu.classList.contains("hidden");
+
+            menuBtn.textContent = isOpen ? "✕" : "☰";
+            menuBtn.setAttribute("aria-expanded", isOpen);
+
         });
 
+
+        // CLOSE MOBILE MENU AFTER CLICK
         document.querySelectorAll("#mobileMenu a").forEach(function (link) {
+
             link.addEventListener("click", function () {
+
                 mobileMenu.classList.add("hidden");
+
                 menuBtn.textContent = "☰";
+                menuBtn.setAttribute("aria-expanded", "false");
+
             });
+
         });
 
-        // Footer Year
-        document.querySelector("#year").textContent = new Date().getFullYear();
 
-        // GSAP INTRO TIMELINE
-        const tl = gsap.timeline({
-            paused: true,
-            defaults: {
-                duration: 0.8,
-                ease: "power2.out"
-            }
-        });
+        // FOOTER YEAR
+        document.querySelector("#year").textContent =
+            new Date().getFullYear();
 
-        tl.from(".hero-content", {
-            y: 60,
-            opacity: 0
-        })
-        .from("nav a", {
-            y: -20,
-            opacity: 0,
-            stagger: 0.15
-        }, "-=0.4");
 
-        // Replay Intro Button
-        document.querySelector("#replayBtn").addEventListener("click", function () {
-            if (!prefersReducedMotion) {
-                tl.restart();
-            }
-        });
-
-        // ScrollTrigger Animations
+        // AUTOMATIC GSAP INTRO TIMELINE
         if (!prefersReducedMotion) {
 
-            // Reveal sections
+            const tl = gsap.timeline({
+                defaults: {
+                    duration: 0.8,
+                    ease: "power2.out"
+                }
+            });
+
+            tl.from(".hero-content", {
+                y: 60,
+                opacity: 0
+            })
+
+            .from("nav a", {
+                y: -20,
+                opacity: 0,
+                stagger: 0.15
+            }, "-=0.4");
+
+        }
+
+
+        // SCROLLTRIGGER ANIMATIONS
+        if (!prefersReducedMotion) {
+
+
+            // REVEAL SECTIONS
             gsap.utils.toArray(".reveal").forEach(function (section) {
+
                 gsap.from(section, {
+
                     y: 50,
                     opacity: 0,
                     duration: 0.8,
                     ease: "power2.out",
+
                     scrollTrigger: {
                         trigger: section,
                         start: "top 80%",
                         toggleActions: "play none none reverse"
                     }
+
                 });
+
             });
 
-            // Product cards animation
-            gsap.from(".product-card", {
-                y: 60,
+
+            // PRODUCT HEADING ANIMATION
+            gsap.from(".product-heading", {
+
+                y: 40,
                 opacity: 0,
                 duration: 0.8,
-                stagger: 0.2,
+
                 scrollTrigger: {
                     trigger: "#products",
                     start: "top 75%"
                 }
+
             });
 
-            // Scroll progress bar
+
+            // PRODUCT CARDS ANIMATION
+            gsap.from(".product-card", {
+
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+
+                scrollTrigger: {
+                    trigger: "#products",
+                    start: "top 70%"
+                }
+
+            });
+
+
+            // SCROLL PROGRESS BAR
             gsap.fromTo("#progressBar",
-                { scaleX: 0 },
+
+                {
+                    scaleX: 0
+                },
+
                 {
                     scaleX: 1,
                     ease: "none",
+
                     scrollTrigger: {
                         trigger: "body",
                         start: "top top",
                         end: "bottom bottom",
                         scrub: true
                     }
+
                 }
+
             );
 
-            // Pin About section while scrolling through Products
-            ScrollTrigger.create({
-                trigger: "#about",
-                start: "top top",
-                endTrigger: "#products",
-                end: "bottom bottom",
-                pin: ".about-image",
-                pinSpacing: false
-            });
 
-            // Product hover animation
+            // PRODUCT HOVER ANIMATION
             document.querySelectorAll(".product-card").forEach(function (card) {
+
                 card.addEventListener("mouseenter", function () {
+
                     gsap.to(card, {
                         scale: 1.03,
                         duration: 0.3
                     });
+
                 });
 
                 card.addEventListener("mouseleave", function () {
+
                     gsap.to(card, {
                         scale: 1,
                         duration: 0.3
                     });
+
                 });
+
             });
+
         }
 
-        // Contact Form Demo
+
+        // CONTACT FORM DEMO
         document.querySelector("#contactForm").addEventListener("submit", function (event) {
+
             event.preventDefault();
+
             document.querySelector("#formMessage").textContent =
                 "Thank you! Your message has been prepared. Connect a backend to receive submissions.";
+
             this.reset();
+
         });
 
-        // Refresh ScrollTrigger after page assets load
+
+        // REFRESH SCROLLTRIGGER AFTER PAGE LOAD
         window.addEventListener("load", function () {
+
             ScrollTrigger.refresh();
+
         });
+
     </script>
 
 </body>
