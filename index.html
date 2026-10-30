@@ -1,361 +1,436 @@
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom & Bliss Flower Shop</title>
 
-    <title>Bloom & Bliss | Flower Shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <!-- Google Fonts -->
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+
+        @layer components {
+            .btn-primary {
+                @apply rounded-full bg-pink-600 px-6 py-3 text-white transition-colors hover:bg-pink-800 dark:bg-pink-700 dark:hover:bg-pink-500;
+            }
+
+            .nav-link {
+                @apply transition-colors duration-300 hover:text-pink-500;
+            }
+
+            .product-card {
+                @apply overflow-hidden rounded-2xl bg-white shadow-lg transition-transform duration-300 hover:-translate-y-2 dark:bg-[#382630];
+            }
+        }
+    </style>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
 
-    <!-- Design System Configuration -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        flower: {
-                            cream: '#FFF9F5',
-                            pink: '#FFF0F3',
-                            rose: '#E8A6B5',
-                            dark: '#633B4A',
-                            night: '#21171D',
-                            surface: '#382630',
-                            lightrose: '#F3C2D0'
-                        }
-                    },
-                    fontFamily: {
-                        poppins: ['Poppins', 'sans-serif']
-                    }
-                }
+        #progressBar {
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
             }
         }
-    </script>
-
-    <!-- Remember Theme Preference -->
-    <script>
-        try {
-            const savedTheme = localStorage.getItem('bloom-theme');
-            const prefersDark = window.matchMedia(
-                '(prefers-color-scheme: dark)'
-            ).matches;
-
-            if (savedTheme === 'dark' ||
-                (!savedTheme && prefersDark)) {
-                document.documentElement.classList.add('dark');
-            }
-        } catch (error) {
-            console.log('Theme preference unavailable.');
-        }
-    </script>
+    </style>
 </head>
 
-<body class="font-poppins bg-flower-cream text-flower-dark
-             dark:bg-flower-night dark:text-flower-cream
-             transition-colors duration-300">
+<body class="bg-[#FFF9F5] text-[#633B4A] transition-colors duration-300 dark:bg-[#21171D] dark:text-[#FFF9F5]">
 
-    <!-- NAVBAR -->
-    <header class="sticky top-0 z-50 bg-white/95 dark:bg-flower-surface/95
-                   backdrop-blur shadow-md">
+    <!-- Scroll Progress Bar -->
+    <div id="progressBar"
+        class="fixed left-0 top-0 z-[100] h-1 w-full bg-pink-500">
+    </div>
 
-        <nav class="max-w-7xl mx-auto px-6 py-4
-                    flex justify-between items-center">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-[#FFF9F5]/90 shadow-sm backdrop-blur-md dark:bg-[#21171D]/90">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
 
-            <a href="#home"
-               class="text-2xl font-bold text-flower-dark
-                      dark:text-flower-lightrose">
-                Bloom <span class="text-flower-rose">& Bliss</span>
+            <a href="#home" class="text-2xl font-bold text-pink-600">
+                Bloom & Bliss
             </a>
 
-            <div class="hidden md:flex gap-8 font-medium">
-                <a href="#home" class="hover:text-flower-rose">Home</a>
-                <a href="#about" class="hover:text-flower-rose">About</a>
-                <a href="#products" class="hover:text-flower-rose">Flowers</a>
-                <a href="#contact" class="hover:text-flower-rose">Contact</a>
+            <div class="hidden items-center gap-8 md:flex">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
 
             <div class="flex items-center gap-3">
-
-                <!-- DARK MODE BUTTON -->
-                <button
-                    id="themeToggle"
-                    type="button"
-                    aria-label="Switch to dark mode"
-                    aria-pressed="false"
-                    class="w-11 h-11 rounded-full bg-flower-pink
-                           dark:bg-flower-night
-                           text-flower-dark dark:text-flower-lightrose
-                           hover:scale-110 transition">
-
-                    <span class="dark:hidden text-xl">🌙</span>
-                    <span class="hidden dark:inline text-xl">☀️</span>
-
+                <button id="replayBtn" class="btn-primary px-4 py-2 text-sm">
+                    Replay Intro
                 </button>
 
-                <a href="#products"
-                   class="hidden sm:inline-block bg-flower-rose
-                          text-white px-5 py-2 rounded-full
-                          hover:bg-flower-dark transition">
-                    Shop Now
-                </a>
+                <button id="darkModeToggle"
+                    class="rounded-full border border-pink-400 px-4 py-2 text-sm transition hover:bg-pink-100 dark:hover:bg-[#382630]">
+                    🌙 / ☀️
+                </button>
 
+                <button id="menuBtn" class="text-2xl md:hidden" aria-label="Toggle navigation">
+                    ☰
+                </button>
             </div>
         </nav>
+
+        <div id="mobileMenu" class="hidden flex-col gap-4 px-6 pb-6 md:hidden">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#products" class="nav-link">Products</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section id="home"
-        class="min-h-[80vh] flex items-center bg-cover bg-center"
-        style="background-image:
-        linear-gradient(#0006,#0006),
-        url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1600');">
+    <main>
 
-        <div class="max-w-7xl mx-auto px-6 text-white">
+        <!-- Hero Section -->
+        <section id="home"
+            class="hero flex min-h-[85vh] items-center justify-center bg-gradient-to-br from-pink-100 via-[#FFF9F5] to-rose-200 px-6 text-center dark:from-[#382630] dark:via-[#21171D] dark:to-[#633B4A]">
 
-            <p class="uppercase tracking-widest mb-4 text-pink-200">
-                Fresh Flowers, Beautiful Memories
-            </p>
+            <div class="hero-content max-w-3xl">
+                <p class="mb-4 font-semibold uppercase tracking-[5px] text-pink-600 dark:text-pink-300">
+                    Fresh Flowers • Beautiful Moments
+                </p>
 
-            <h1 class="text-4xl md:text-6xl font-bold
-                       max-w-2xl mb-6">
-                Make Every Moment Bloom
-            </h1>
+                <h1 class="mb-6 text-4xl font-bold leading-tight md:text-6xl">
+                    Make Every Moment
+                    <span class="text-pink-600">Bloom</span>
+                </h1>
 
-            <p class="text-lg max-w-xl mb-8">
-                Beautiful flowers for birthdays, anniversaries,
-                weddings, and every special moment in life.
-            </p>
+                <p class="mb-8 text-lg">
+                    Beautiful flowers for birthdays, weddings, anniversaries,
+                    and every special moment in life.
+                </p>
 
-            <a href="#products"
-               class="inline-block bg-flower-rose px-8 py-3
-                      rounded-full text-white
-                      hover:bg-flower-dark transition">
-                Explore Flowers
-            </a>
+                <a href="#products" class="btn-primary inline-block">
+                    Explore Our Flowers
+                </a>
+            </div>
+        </section>
 
-        </div>
-    </section>
+        <!-- About Section -->
+        <section id="about" class="reveal mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 md:grid-cols-2">
 
-    <!-- ABOUT SECTION -->
-    <section id="about" class="py-20 px-6">
+            <div class="about-image">
+                <img
+                    src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=900"
+                    alt="Beautiful pink flowers"
+                    class="h-[400px] w-full rounded-3xl object-cover shadow-xl">
+            </div>
 
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2
-                    gap-12 items-center">
-
-            <img
-                src="https://images.unsplash.com/photo-1520763185298-1b434c919102?w=900"
-                alt="Beautiful flower arrangement"
-                class="rounded-2xl shadow-xl w-full h-96 object-cover">
-
-            <div>
-
-                <p class="text-flower-rose font-bold uppercase mb-3">
+            <div class="about-content">
+                <p class="mb-3 font-semibold uppercase tracking-widest text-pink-600">
                     About Our Shop
                 </p>
 
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                <h2 class="mb-6 text-3xl font-bold md:text-5xl">
                     Flowers That Speak From The Heart
                 </h2>
 
-                <p class="text-gray-600 dark:text-gray-300
-                          leading-relaxed mb-6">
-                    Bloom & Bliss is a flower shop dedicated to
-                    creating beautiful floral arrangements.
-                    We offer fresh flowers and customized bouquets
-                    for every celebration and special occasion.
+                <p class="mb-6 leading-8">
+                    Bloom & Bliss Flower Shop brings beauty and happiness
+                    through fresh and carefully arranged flowers.
+                    We believe every flower tells a story and every bouquet
+                    creates a special memory.
                 </p>
 
-                <a href="#contact"
-                   class="inline-block bg-flower-dark dark:bg-flower-rose
-                          text-white px-6 py-3 rounded-lg
-                          hover:opacity-80 transition">
+                <a href="#contact" class="btn-primary inline-block">
                     Contact Us
                 </a>
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- PRODUCTS SECTION -->
-    <section id="products"
-        class="py-20 bg-flower-pink dark:bg-flower-surface px-6">
+        <!-- Products Section -->
+        <section id="products" class="bg-[#FFF0F3] px-6 py-24 dark:bg-[#382630]">
 
-        <div class="max-w-7xl mx-auto">
+            <div class="mx-auto max-w-7xl">
 
-            <div class="text-center mb-12">
+                <div class="product-heading mb-14 text-center">
+                    <p class="mb-3 font-semibold uppercase tracking-widest text-pink-600">
+                        Our Collection
+                    </p>
 
-                <p class="text-flower-rose font-bold uppercase">
-                    Our Collection
+                    <h2 class="text-3xl font-bold md:text-5xl">
+                        Our Beautiful Flowers
+                    </h2>
+
+                    <p class="mt-4">
+                        Find the perfect bouquet for every occasion.
+                    </p>
+                </div>
+
+                <div class="grid gap-8 md:grid-cols-3">
+
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=700"
+                            alt="Red rose bouquet"
+                            class="h-72 w-full object-cover">
+
+                        <div class="p-6">
+                            <h3 class="mb-2 text-xl font-bold">Red Rose Bouquet</h3>
+                            <p class="mb-4">A classic symbol of love and romance.</p>
+                            <p class="font-bold text-pink-600">₱850</p>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1520763185298-1b434c919102?w=700"
+                            alt="Pink flower bouquet"
+                            class="h-72 w-full object-cover">
+
+                        <div class="p-6">
+                            <h3 class="mb-2 text-xl font-bold">Pink Blossom</h3>
+                            <p class="mb-4">A lovely gift for someone special.</p>
+                            <p class="font-bold text-pink-600">₱1,200</p>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=700"
+                            alt="White flower bouquet"
+                            class="h-72 w-full object-cover">
+
+                        <div class="p-6">
+                            <h3 class="mb-2 text-xl font-bold">White Elegance</h3>
+                            <p class="mb-4">Simple, elegant, and timeless.</p>
+                            <p class="font-bold text-pink-600">₱1,500</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="reveal mx-auto max-w-3xl px-6 py-24">
+
+            <div class="mb-10 text-center">
+                <p class="mb-3 font-semibold uppercase tracking-widest text-pink-600">
+                    Get In Touch
                 </p>
 
-                <h2 class="text-4xl font-bold mt-3">
-                    Our Beautiful Flowers
+                <h2 class="text-3xl font-bold md:text-5xl">
+                    Let's Make Something Beautiful
                 </h2>
 
-                <p class="text-gray-600 dark:text-gray-300 mt-4">
-                    Find the perfect flowers for someone special.
+                <p class="mt-4">
+                    Have a question or want to order flowers? Send us a message.
                 </p>
-
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <form id="contactForm" class="flex flex-col gap-5">
 
-                <!-- PRODUCT 1 -->
-                <article class="bg-white dark:bg-flower-night
-                                rounded-2xl overflow-hidden shadow-lg
-                                hover:-translate-y-2 transition">
+                <label for="name" class="font-medium">Your Name</label>
+                <input type="text" id="name" required
+                    class="rounded-xl border border-pink-200 bg-white p-4 text-gray-900 outline-none focus:border-pink-500 dark:border-[#633B4A] dark:bg-[#382630] dark:text-white">
 
-                    <img
-                        src="https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=800"
-                        alt="Red roses bouquet"
-                        class="w-full h-64 object-cover">
+                <label for="email" class="font-medium">Your Email</label>
+                <input type="email" id="email" required
+                    class="rounded-xl border border-pink-200 bg-white p-4 text-gray-900 outline-none focus:border-pink-500 dark:border-[#633B4A] dark:bg-[#382630] dark:text-white">
 
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold">Red Roses</h3>
+                <label for="message" class="font-medium">Your Message</label>
+                <textarea id="message" rows="5" required
+                    class="rounded-xl border border-pink-200 bg-white p-4 text-gray-900 outline-none focus:border-pink-500 dark:border-[#633B4A] dark:bg-[#382630] dark:text-white"></textarea>
 
-                        <p class="text-gray-600 dark:text-gray-300 my-3">
-                            A romantic bouquet perfect for expressing love.
-                        </p>
+                <button type="submit" class="btn-primary">
+                    Send Message
+                </button>
 
-                        <p class="text-flower-rose font-bold text-xl">
-                            ₱850
-                        </p>
-                    </div>
-                </article>
+                <p id="formMessage" class="text-center text-sm" aria-live="polite"></p>
+            </form>
+        </section>
 
-                <!-- PRODUCT 2 -->
-                <article class="bg-white dark:bg-flower-night
-                                rounded-2xl overflow-hidden shadow-lg
-                                hover:-translate-y-2 transition">
+    </main>
 
-                    <img
-                        src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=800"
-                        alt="Pink tulips"
-                        class="w-full h-64 object-cover">
-
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold">Pink Tulips</h3>
-
-                        <p class="text-gray-600 dark:text-gray-300 my-3">
-                            Elegant flowers for birthdays and celebrations.
-                        </p>
-
-                        <p class="text-flower-rose font-bold text-xl">
-                            ₱750
-                        </p>
-                    </div>
-                </article>
-
-                <!-- PRODUCT 3 -->
-                <article class="bg-white dark:bg-flower-night
-                                rounded-2xl overflow-hidden shadow-lg
-                                hover:-translate-y-2 transition">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=800"
-                        alt="Mixed flower bouquet"
-                        class="w-full h-64 object-cover">
-
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold">Mixed Bouquet</h3>
-
-                        <p class="text-gray-600 dark:text-gray-300 my-3">
-                            A colorful arrangement for every occasion.
-                        </p>
-
-                        <p class="text-flower-rose font-bold text-xl">
-                            ₱1,200
-                        </p>
-                    </div>
-                </article>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="py-20 px-6">
-
-        <div class="max-w-4xl mx-auto text-center">
-
-            <p class="text-flower-rose font-bold uppercase mb-3">
-                Get In Touch
-            </p>
-
-            <h2 class="text-4xl font-bold mb-5">
-                Let Your Moments Bloom!
-            </h2>
-
-            <p class="text-gray-600 dark:text-gray-300 mb-8">
-                Visit our flower shop or contact us to order
-                your favorite floral arrangement.
-            </p>
-
-            <div class="space-y-3">
-                <p>📍 Cebu City, Philippines</p>
-                <p>📞 0912-345-6789</p>
-                <p>✉ bloombliss@example.com</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="bg-flower-dark dark:bg-flower-surface
-                   text-white text-center py-8">
-
-        <h2 class="text-xl font-bold mb-2">
-            Bloom & Bliss Flower Shop
-        </h2>
-
-        <p class="text-sm text-pink-100">
-            © 2026 Bloom & Bliss. All Rights Reserved.
-        </p>
-
+    <!-- Footer -->
+    <footer class="bg-[#633B4A] px-6 py-10 text-center text-white">
+        <h2 class="mb-3 text-2xl font-bold">Bloom & Bliss</h2>
+        <p>Bringing happiness through flowers.</p>
+        <p class="mt-5 text-sm">© <span id="year"></span> Bloom & Bliss Flower Shop. All rights reserved.</p>
     </footer>
 
-    <!-- DARK MODE JAVASCRIPT -->
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
     <script>
-        const themeToggle = document.getElementById('themeToggle');
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
 
-        themeToggle.addEventListener('click', function () {
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
 
-            const isDark = document.documentElement.classList.toggle('dark');
+        // Dark Mode
+        const darkModeToggle = document.querySelector("#darkModeToggle");
+        const html = document.documentElement;
 
-            try {
-                localStorage.setItem(
-                    'bloom-theme',
-                    isDark ? 'dark' : 'light'
-                );
-            } catch (error) {
-                console.log('Unable to save theme preference.');
+        let spinTween;
+
+        darkModeToggle.addEventListener("click", function () {
+            html.classList.toggle("dark");
+
+            if (!prefersReducedMotion) {
+                if (!spinTween) {
+                    spinTween = gsap.to(darkModeToggle, {
+                        rotation: "+=360",
+                        duration: 2,
+                        ease: "power1.in",
+                        repeat: -1,
+                        onRepeat() {
+                            this.duration(Math.max(0.08, this.duration() * 0.8));
+                        }
+                    });
+                }
             }
-
-            themeToggle.setAttribute(
-                'aria-pressed',
-                String(isDark)
-            );
-
-            themeToggle.setAttribute(
-                'aria-label',
-                isDark ? 'Switch to light mode' : 'Switch to dark mode'
-            );
-
         });
 
-        // Set initial accessibility state
-        themeToggle.setAttribute(
-            'aria-pressed',
-            String(document.documentElement.classList.contains('dark'))
-        );
+        // Mobile Menu
+        const menuBtn = document.querySelector("#menuBtn");
+        const mobileMenu = document.querySelector("#mobileMenu");
+
+        menuBtn.addEventListener("click", function () {
+            mobileMenu.classList.toggle("hidden");
+            menuBtn.textContent = mobileMenu.classList.contains("hidden") ? "☰" : "✕";
+        });
+
+        document.querySelectorAll("#mobileMenu a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                mobileMenu.classList.add("hidden");
+                menuBtn.textContent = "☰";
+            });
+        });
+
+        // Footer Year
+        document.querySelector("#year").textContent = new Date().getFullYear();
+
+        // GSAP INTRO TIMELINE
+        const tl = gsap.timeline({
+            paused: true,
+            defaults: {
+                duration: 0.8,
+                ease: "power2.out"
+            }
+        });
+
+        tl.from(".hero-content", {
+            y: 60,
+            opacity: 0
+        })
+        .from("nav a", {
+            y: -20,
+            opacity: 0,
+            stagger: 0.15
+        }, "-=0.4");
+
+        // Replay Intro Button
+        document.querySelector("#replayBtn").addEventListener("click", function () {
+            if (!prefersReducedMotion) {
+                tl.restart();
+            }
+        });
+
+        // ScrollTrigger Animations
+        if (!prefersReducedMotion) {
+
+            // Reveal sections
+            gsap.utils.toArray(".reveal").forEach(function (section) {
+                gsap.from(section, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+
+            // Product cards animation
+            gsap.from(".product-card", {
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                scrollTrigger: {
+                    trigger: "#products",
+                    start: "top 75%"
+                }
+            });
+
+            // Scroll progress bar
+            gsap.fromTo("#progressBar",
+                { scaleX: 0 },
+                {
+                    scaleX: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: true
+                    }
+                }
+            );
+
+            // Pin About section while scrolling through Products
+            ScrollTrigger.create({
+                trigger: "#about",
+                start: "top top",
+                endTrigger: "#products",
+                end: "bottom bottom",
+                pin: ".about-image",
+                pinSpacing: false
+            });
+
+            // Product hover animation
+            document.querySelectorAll(".product-card").forEach(function (card) {
+                card.addEventListener("mouseenter", function () {
+                    gsap.to(card, {
+                        scale: 1.03,
+                        duration: 0.3
+                    });
+                });
+
+                card.addEventListener("mouseleave", function () {
+                    gsap.to(card, {
+                        scale: 1,
+                        duration: 0.3
+                    });
+                });
+            });
+        }
+
+        // Contact Form Demo
+        document.querySelector("#contactForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            document.querySelector("#formMessage").textContent =
+                "Thank you! Your message has been prepared. Connect a backend to receive submissions.";
+            this.reset();
+        });
+
+        // Refresh ScrollTrigger after page assets load
+        window.addEventListener("load", function () {
+            ScrollTrigger.refresh();
+        });
     </script>
 
 </body>
